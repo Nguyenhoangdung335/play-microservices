@@ -1,28 +1,34 @@
 pipeline {
-    agent any
-
-    environment {
-        // Define any environment variables needed
-        DOCKER_IMAGE = 'your-docker-image-name'
-    }
-
+    agent any 
     stages {
-        stage('Build') {
+        stage('Static Analysis') {
             steps {
-                sh 'echo Bulding...'
+                echo 'Run the static analysis to the code' 
             }
         }
-        stage('Test') {
+        stage('Compile') {
             steps {
-                sh 'echo Testing...'
+                echo 'Compile the source code' 
             }
         }
-        stage('Deploy') {
+        stage('Security Check') {
             steps {
-                // Deploy the Docker container on the server
-                sh '''
-                echo Deploying...
-                '''
+                echo 'Run the security check against the application' 
+            }
+        }
+        stage('Run Unit Tests') {
+            steps {
+                echo 'Run unit tests from the source code' 
+            }
+        }
+        stage('Run Integration Tests') {
+            steps {
+                echo 'Run only crucial integration tests from the source code' 
+            }
+        }
+        stage('Publish Artifacts') {
+            steps {
+                echo 'Save the assemblies generated from the compilation' 
             }
         }
     }
