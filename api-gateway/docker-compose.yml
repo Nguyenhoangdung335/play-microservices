@@ -1,4 +1,3 @@
-version: '3'
 services:
   gripmock:
     build:
@@ -18,10 +17,12 @@ services:
       --grpc-port=${GRIPMOCK_GRPC_PORT} 
       --stub=/mock/stub /mock/job.proto /mock/report.proto /mock/user.proto
   api-gateway-service:
-    build: 
+    build:
       context: ./api-gateway-service
       dockerfile: Dockerfile
     container_name: api-gateway-service
+    env_file:
+      - ./api-gateway-service/config/.env
     environment:
       - SERVER_PORT=${API_GATEWAY_PORT}
       - CLIENT_DOMAIN=localhost # we call the server from this domain (for cookie registration ,...)
@@ -31,7 +32,6 @@ services:
       - AUTH_PUBLIC_KEY_FILE=/run/secrets/auth-public-key
     ports:
       - ${API_GATEWAY_PORT}:${API_GATEWAY_PORT}
-    command: sleep infinity
     volumes:
       - ./api-gateway-service:/usr/src/app
 

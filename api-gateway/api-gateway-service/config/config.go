@@ -43,6 +43,7 @@ func goDotEnvVariable(key string) string {
 	value := os.Getenv(key)
 	if value == "" {
 		log.Fatalf("Error loading enironment variable for: %s.", key)
+		return ""
 	}
 	return value
 }
@@ -78,7 +79,7 @@ func InitConfig() (*Config, error) {
 	// load .env file
 	err := godotenv.Load("./config/.env")
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Printf("Error loading .env file, try to read from environment variables")
 	}
 
 	var c Config
