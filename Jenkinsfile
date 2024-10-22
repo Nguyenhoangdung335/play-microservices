@@ -31,5 +31,10 @@ pipeline {
                 echo 'Save the assemblies generated from the compilation' 
             }
         }
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose up -d --build'
+            }
+        }
     }
 }
